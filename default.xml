@@ -4,11 +4,13 @@
 
   <default sync-j="4"/>
 
-  <project remote="flashbots"       revision="main"              name="yocto-scripts"                   path="srcs/yocto-scripts">
+  <project remote="flashbots"       revision="tdx"              name="yocto-scripts"                   path="srcs/yocto-scripts">
        <copyfile dest="setup" src="setup"/>
   </project>
 
-  <project remote="flashbots"       revision="main"             name="yocto-manifests"                 path="srcs/manifest"/>
-  <project remote="flashbots"       revision="main"             name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="tdx"              name="yocto-manifests"                 path="srcs/manifest"/>
+  <project remote="flashbots"       revision="main"             name="meta-evm"                        path="srcs/meta-evm"/>
+  <project remote="flashbots"       revision="main"             name="meta-confidential-compute"       path="srcs/meta-confidential-compute"/>
+  <project remote="flashbots"       revision="scarthgap"        name="poky"                            path="srcs/poky"/>
   
 </manifest>
