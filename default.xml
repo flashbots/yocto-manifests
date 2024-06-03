@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="flashbots"  fetch="https://github.com/flashbots"/>
+
+  <default sync-j="4"/>
+
+  <project remote="flashbots"       revision="main"              name="yocto-scripts"                   path="srcs/yocto-scripts">
+       <copyfile dest="setup" src="setup"/>
+  </project>
+
+  <project remote="flashbots"       revision="main"             name="yocto-manifests"                 path="srcs/manifest"/>
+  <project remote="flashbots"       revision="main"             name="poky"                            path="srcs/poky"/>
+  
+</manifest>
