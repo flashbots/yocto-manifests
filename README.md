@@ -63,7 +63,7 @@ $ cd yocto/<release_version>
 
 * Clone the Yocto meta layer source using yocto manifest as show below.
 ```
-$ repo init -u https://github.com/Xilinx/yocto-manifests.git -b <release_version>
+$ repo init -u https://github.com/flashbots/yocto-manifests.git -b <release_version>
 ```
 A successful initialization will end with a message stating that Repo is
 initialized in your working directory. Your directory should now contain a
@@ -88,12 +88,12 @@ $ repo start <branch_name> --all
 $ source setup
 ```
 ## TODOs
-- [ ] create a TDX branch in the yocto-scripts to update the setup files accordingly
-- [ ] create a TDX branch in yocto-manifest that include the confidential VM layers
-- [ ] automate the configuration of local.conf and bblayer.conf in a separate script
+- [x] create a TDX branch in the yocto-scripts to update the setup files accordingly
+- [x] create a TDX branch in yocto-manifest that include the confidential VM layers
+- [x] automate the configuration of local.conf and bblayer.conf in a separate script
 - [ ] automate the build process that does all the necessary steps based on the provided target (e.g. TDX)
 - [ ] add scripts that generate measurements of the built VMs
-
+- [ ] create a docker-yocto-manifest repo that automates the reproducible build within docker environment
 
 ## Staying Up to Date
 
