@@ -5,7 +5,8 @@
   <default sync-j="4"/>
 
   <project remote="flashbots"       revision="tdx"              name="yocto-scripts"                   path="srcs/yocto-scripts">
-       <copyfile dest="setup" src="setup"/>
+       <copyfile dest="setup"       src="setup"/>
+       <copyfile dest="Makefile"    src="Makefile"/>
   </project>
 
   <project remote="flashbots"       revision="tdx"              name="yocto-manifests"                 path="srcs/manifest"/>

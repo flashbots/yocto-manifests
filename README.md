@@ -87,12 +87,23 @@ $ repo start <branch_name> --all
 ```
 $ source setup
 ```
+
+7. Build the image by using the provided `Makefile`.
+```
+$ make build
+```
+
+8. Generate the measurements values after building the image. They will be located in measurements directory
+```
+$ make gen-measurements
+```
+
 ## TODOs
 - [x] create a TDX branch in the yocto-scripts to update the setup files accordingly
 - [x] create a TDX branch in yocto-manifest that include the confidential VM layers
 - [x] automate the configuration of local.conf and bblayer.conf in a separate script
-- [ ] automate the build process that does all the necessary steps based on the provided target (e.g. TDX)
-- [ ] add scripts that generate measurements of the built VMs
+- [x] automate the build process that does all the necessary steps based on the provided target (e.g. TDX)
+- [x] add scripts that generate measurements of the built VMs
 - [ ] create a docker-yocto-manifest repo that automates the reproducible build within docker environment
 
 ## Staying Up to Date
