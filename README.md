@@ -99,17 +99,11 @@ $ make gen-measurements
 ```
 > **Note:** to generate the measurements, you need to make sure that you have `python3`, `libssl-dev` and the `signify` module installed.
 
-## TODOs
-- [x] create a TDX branch in the yocto-scripts to update the setup files accordingly
-- [x] create a TDX branch in yocto-manifest that include the confidential VM layers
-- [x] automate the configuration of local.conf and bblayer.conf in a separate script
-- [x] automate the build process that does all the necessary steps based on the provided target (e.g. TDX)
-- [x] add scripts that generate measurements of the built VMs
-- [ ] create a docker-yocto-manifest repo that automates the reproducible build within docker environment
-
 ## Staying Up to Date
 
 To pick up the latest changes for all source repositories, run:
 ```
 $ repo sync
 ```
+## Docker build env
+There is also [poky-container](https://github.com/crops/poky-container/) as an alternative docker build environment to build your yocto projects with it.
