@@ -21,7 +21,7 @@ setup a Yocto Project build environment for you!
    documentation to install essential host packages on your build host. The
    following command installs the host packages based on an Ubuntu distribution.
 ```
-$ sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev xterm python3-subunit mesa-common-dev zstd liblz4-tool chrpath diffstat lz4
+$ sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev xterm python3-subunit mesa-common-dev zstd liblz4-tool chrpath diffstat lz4 mtools
 $ sudo locale-gen en_US.UTF-8
 ```
 
@@ -97,6 +97,7 @@ $ make build
 ```
 $ make gen-measurements
 ```
+> **Note:** to generate the measurements, you need to make sure that you have `python3`, `libssl-dev` and the `signify` module installed.
 
 ## TODOs
 - [x] create a TDX branch in the yocto-scripts to update the setup files accordingly
