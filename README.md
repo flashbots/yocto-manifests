@@ -94,3 +94,6 @@ To pick up the latest changes for all source repositories, run:
 ```
 $ repo sync
 ```
+
+## Docker build env
+There is also [poky-container](https://github.com/crops/poky-container/) as an alternative docker build environment to build your yocto projects with it.
