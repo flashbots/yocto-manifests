@@ -9,6 +9,6 @@
   </project>
 
   <project remote="flashbots"       revision="main"             name="yocto-manifests"                 path="srcs/manifest"/>
-  <project remote="flashbots"       revision="main"             name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="scarthgap"        name="poky"                            path="srcs/poky"/>
   
 </manifest>
