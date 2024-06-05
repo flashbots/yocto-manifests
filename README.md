@@ -98,6 +98,12 @@ $ make build
 $ make gen-measurements
 ```
 > **Note:** to generate the measurements, you need to make sure that you have `python3`, `libssl-dev` and the `signify` module installed.
+>
+>$ sudo apt-get install python3 libssl-dev 
+>
+>$ ln -s /usr/bin/python3 /usr/bin/python 
+>
+>$ pip install signify
 
 ## Staying Up to Date
 
