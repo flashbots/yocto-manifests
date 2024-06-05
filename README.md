@@ -11,6 +11,8 @@ single *manifest* file.  Tell repo to fetch a manifest from this repository and
 it will fetch the git repositories specified in the manifest and, by doing so,
 setup a Yocto Project build environment for you!
 
+> **Note**: The main branch serves here as a template that you can start with to setup your own reproducible build. You can check out the `tdx` branch as an example to see how to add your custom layers and use this template.
+
 ## Manifest Files
 
 * **default.xml** - External releasable components. Used for release builds.
