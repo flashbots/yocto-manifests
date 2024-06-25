@@ -13,7 +13,7 @@
   <project remote="flashbots"       revision="scarthgap"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="scarthgap"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="main"             name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
-  <project remote="flashbots"       revision="tdx"              name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="main"             name="meta-evm"                        path="srcs/poky/meta-evm"/>
   <project remote="flashbots"       revision="master"           name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
   <project remote="flashbots"       revision="tdx"              name="yocto-manifests"                 path="srcs/manifest"/>
 
