@@ -12,4 +12,4 @@ RUN cd lighthouse && cargo install --target x86_64-unknown-linux-gnu --path ligh
 
 FROM scratch as binaries
 
-COPY --from=builder /usr/local/cargo/bin/lighthouse /build/lighthouse
+COPY --from=builder /usr/local/cargo/bin/lighthouse /lighthouse
