@@ -6,4 +6,6 @@ RUN apt install -y repo
 ADD ./build.sh /usr/bin/build
 RUN chmod +x /usr/bin/build
 
+ADD ./meta-evm.patch /meta-evm.patch
+
 CMD /usr/bin/build

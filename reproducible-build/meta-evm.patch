@@ -1,0 +1,171 @@
+From 56502fa204adacab2b085bb2cf12e7dee9d48ca0 Mon Sep 17 00:00:00 2001
+From: Mateusz Morusiewicz <11313015+Ruteri@users.noreply.github.com>
+Date: Wed, 3 Jul 2024 12:51:06 +0200
+Subject: [PATCH] p
+
+---
+ recipes-nodes/lighthouse/lighthouse.inc    | 16 ------
+ recipes-nodes/lighthouse/lighthouse_dev.bb |  4 --
+ recipes-nodes/rbuilder/rbuilder.inc        | 43 ---------------
+ recipes-nodes/rbuilder/rbuilder_dev.bb     | 63 ----------------------
+ 4 files changed, 126 deletions(-)
+ delete mode 100644 recipes-nodes/lighthouse/lighthouse.inc
+ delete mode 100644 recipes-nodes/lighthouse/lighthouse_dev.bb
+ delete mode 100644 recipes-nodes/rbuilder/rbuilder.inc
+ delete mode 100644 recipes-nodes/rbuilder/rbuilder_dev.bb
+
+diff --git a/recipes-nodes/lighthouse/lighthouse.inc b/recipes-nodes/lighthouse/lighthouse.inc
+deleted file mode 100644
+index 7d1c7a2..0000000
+--- a/recipes-nodes/lighthouse/lighthouse.inc
++++ /dev/null
+@@ -1,16 +0,0 @@
+-SUMMARY = "Lighthouse"
+-DESCRIPTION = "Consensus client to run on the side with the execution client"
+-HOMEPAGE = "https://lighthouse.sigmaprime.io/"
+-LICENSE="CLOSED"
+-LIC_FILES_CHKSUM=""
+-
+-inherit cargo_bin
+-
+-# Enable network for the compile task allowing cargo to download dependencies
+-do_compile[network] = "1"
+-
+-# DEPENDS += "cmake gcc"
+-DEPENDS += " openssl"
+-
+-
+-S = "${WORKDIR}/git"
+diff --git a/recipes-nodes/lighthouse/lighthouse_dev.bb b/recipes-nodes/lighthouse/lighthouse_dev.bb
+deleted file mode 100644
+index d545c9f..0000000
+--- a/recipes-nodes/lighthouse/lighthouse_dev.bb
++++ /dev/null
+@@ -1,4 +0,0 @@
+-include lighthouse.inc
+-
+-SRC_URI = "git://github.com/sigp/lighthouse;protocol=https;branch=stable"
+-SRCREV = "${AUTOREV}"
+diff --git a/recipes-nodes/rbuilder/rbuilder.inc b/recipes-nodes/rbuilder/rbuilder.inc
+deleted file mode 100644
+index 7f4cdfb..0000000
+--- a/recipes-nodes/rbuilder/rbuilder.inc
++++ /dev/null
+@@ -1,43 +0,0 @@
+-SUMMARY = "Rust Builder"
+-DESCRIPTION = "Rust builder running with a full ethereum node (reth) implemented in rust."
+-LICENSE="CLOSED"
+-LIC_FILES_CHKSUM=""
+-
+-inherit cargo_bin update-rc.d
+-
+-# Enable network for the compile task allowing cargo to download dependencies
+-do_compile[network] = "1"
+-
+-DEPENDS += "openssl"
+-RDEPENDS:${PN} += "openssl reth cvm-reverse-proxy config-parser"
+-
+-# temporary fix to build rbuilder with libffi - host gcc means we won't get reproducibility
+-export CC = "${CCACHE}${HOST_PREFIX}gcc ${HOST_CC_ARCH}${TOOLCHAIN_OPTIONS}"
+-export CFLAGS = "${HOST_CFLAGS}"
+-export LDFLAGS = "${HOST_LDFLAGS}"
+-
+-export BINDGEN_EXTRA_CLANG_ARGS
+-BINDGEN_EXTRA_CLANG_ARGS = "--sysroot=${WORKDIR}/recipe-sysroot -I${WORKDIR}/recipe-sysroot/usr/include"
+-
+-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+-SRC_URI += "file://init"
+-SRC_URI += "file://config"
+-SRC_URI += "file://ofac.json"
+-S = "${WORKDIR}/git"
+-
+-INITSCRIPT_NAME = "rbuilder"
+-INITSCRIPT_PARAMS = "defaults 99" 
+-
+-FILES:${PN} += "${sysconfdir}/init.d/rbuilder"
+-FILES:${PN} += "${sysconfdir}/rbuilder.config"
+-FILES:${PN} += "${sysconfdir}/rbuilder.ofac.json"
+-
+-do_install:append() {
+-    install -d ${D}${sysconfdir}/init.d
+-    install -m 0755 ${THISDIR}/init ${D}${sysconfdir}/init.d/rbuilder
+-    install -m 0755 ${THISDIR}/config ${D}${sysconfdir}/rbuilder.config
+-    install -m 0755 ${THISDIR}/ofac.json ${D}${sysconfdir}/rbuilder.ofac.json
+-}
+-
+-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+-INHIBIT_PACKAGE_STRIP = "1"
+\ No newline at end of file
+diff --git a/recipes-nodes/rbuilder/rbuilder_dev.bb b/recipes-nodes/rbuilder/rbuilder_dev.bb
+deleted file mode 100644
+index 4900ff6..0000000
+--- a/recipes-nodes/rbuilder/rbuilder_dev.bb
++++ /dev/null
+@@ -1,63 +0,0 @@
+-SUMMARY = "Rust Builder"
+-HOMEPAGE = "https://github.com/flashbots/rbuilder-private"
+-LICENSE = "CLOSED"
+-
+-include rbuilder.inc
+-
+-python () {
+-    import os
+-    origenv = d.getVar("BB_ORIGENV", False)
+-    git_token = origenv.getVar('GIT_TOKEN') or os.getenv('GIT_TOKEN')
+-    if not git_token:
+-        bb.note("GIT_TOKEN environment variable not set. Will set SRC_URI with ssh protocol")
+-        # Set the SRC_URI with the ssh protocol
+-        d.setVar('SRC_URI', f"git://git@github.com/flashbots/rbuilder-private;protocol=ssh;branch=main")
+-    else:
+-        bb.note("GIT_TOKEN is set")
+-        # Set the SRC_URI with the token included
+-        d.setVar('SRC_URI', f"git://{git_token}@github.com/flashbots/rbuilder-private.git;protocol=https;branch=main")
+-}
+-
+-SRCREV = "${AUTOREV}"
+-PV = "1.0+git${SRCPV}"
+-
+-
+-# Avoid caching sensitive information
+-BB_BASEHASH_IGNORE_VARS:append = " GIT_TOKEN"
+-BB_DONT_CACHE = "1"
+-
+-# Exclude GIT_TOKEN from being logged
+-GIT_TOKEN[vardepsexclude] = "GIT_TOKEN"
+-
+-# Add debugging information and handle file conflicts
+-python do_prepare_recipe_sysroot:append() {
+-    bb.debug(2, "In do_prepare_recipe_sysroot:append")
+-    bb.debug(2, "STAGING_DIR_NATIVE: %s" % d.getVar('STAGING_DIR_NATIVE'))
+-    bb.debug(2, "STAGING_DIR_HOST: %s" % d.getVar('STAGING_DIR_HOST'))
+-    bb.debug(2, "WORKDIR: %s" % d.getVar('WORKDIR'))
+-    
+-    import os
+-    manifest_path = os.path.join(d.getVar('WORKDIR'), "recipe-sysroot-native/usr/lib/rustlib/manifest-rustc")
+-    if os.path.islink(manifest_path):
+-        bb.debug(2, "Removing existing manifest-rustc symlink")
+-        os.remove(manifest_path)
+-}
+-
+-# Add verbose output for debugging
+-EXTRA_OEMAKE = "V=1"
+-EXTRA_OECARGO_BUILDFLAGS = "-vv"
+-
+-# Set up Rust wrapper for proper environment
+-RUSTC_WRAPPER = "${WORKDIR}/wrapper/rust-wrapper.sh"
+-
+-do_configure:prepend() {
+-    mkdir -p ${WORKDIR}/wrapper
+-    cat <<- EOF > ${WORKDIR}/wrapper/rust-wrapper.sh
+-#!/bin/sh
+-export CC="${CC}"
+-export CFLAGS="${CFLAGS}"
+-export LDFLAGS="${LDFLAGS}"
+-\$@
+-EOF
+-    chmod +x ${WORKDIR}/wrapper/rust-wrapper.sh
+-}
+\ No newline at end of file
+-- 
+2.34.1
+
