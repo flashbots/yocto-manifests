@@ -4,5 +4,6 @@ USER root
 RUN apt install -y repo
 
 ADD ./build.sh /usr/bin/build
+RUN chmod +x /usr/bin/build
 
-WORKDIR /build
+CMD /usr/bin/build
