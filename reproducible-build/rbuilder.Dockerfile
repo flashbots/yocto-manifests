@@ -1,4 +1,11 @@
-FROM rust:1.79 as base
+FROM ubuntu:22.04 AS base
+
+# Update default packages
+RUN apt-get update && apt-get install -y build-essential cmake libclang-dev curl pkg-config libssl-dev
+
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN cargo install cargo-chef --version ^0.1
 
@@ -14,9 +21,6 @@ RUN cargo chef prepare --recipe-path recipe.json
 
 FROM base as builder
 WORKDIR /app
-
-RUN apt-get update \
-    && apt-get install -y clang libclang-dev
 
 ARG RUSTFLAGS="-C target-feature=+crt-static"
 ENV RUSTFLAGS "$RUSTFLAGS"

@@ -22,6 +22,6 @@ source setup
 cp /artifacts/rbuilder /build/srcs/poky/meta-evm/recipes-nodes/rbuilder
 cp /artifacts/lighthouse /build/srcs/poky/meta-evm/recipes-nodes/lighthouse
 
-make build
+make build || true
 
 sudo cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
