@@ -14,7 +14,7 @@ repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx
 repo sync
 source setup
 
-cp rbuilder /srcs/poky/meta-evm/recipes-nodes/rbuilder
-cp lighthouse /srcs/poky/meta-evm/recipes-nodes/lighthouse
+cp rbuilder /build/srcs/poky/meta-evm/recipes-nodes/rbuilder
+cp lighthouse /build/srcs/poky/meta-evm/recipes-nodes/lighthouse
 
 make build
