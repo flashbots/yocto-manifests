@@ -13,7 +13,7 @@ cd /build
 repo init -u https://github.com/flashbots/yocto-manifests.git -b build-rbuilder-and-lighthouse-reproducibly
 repo sync
 
-cd /build/srcs/poky/meta-evm && git am /artifacts/meta-evm.patch
+cd /build/srcs/poky/meta-evm && git am /meta-evm.patch
 
 cd /build
 
@@ -24,4 +24,4 @@ cp /artifacts/lighthouse /build/srcs/poky/meta-evm/recipes-nodes/lighthouse
 
 make build
 
-cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
+sudo cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.

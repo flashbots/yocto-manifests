@@ -1,5 +1,11 @@
-FROM rust:1.78.0-bullseye AS builder
-RUN apt-get update && apt-get -y upgrade && apt-get install -y cmake libclang-dev
+FROM ubuntu:22.04 AS builder
+
+# Update default packages
+RUN apt-get update && apt-get install -y build-essential cmake libclang-dev curl
+
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 WORKDIR /app
 

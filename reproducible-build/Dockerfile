@@ -6,9 +6,6 @@ RUN apt install -y repo
 ADD build.sh /usr/bin/build
 RUN chmod +x /usr/bin/build
 
-ADD artifacts/rbuilder /artifacts/rbuilder
-ADD artifacts/lighthouse /artifacts/lighthouse
-
-ADD meta-evm.patch /artifacts/meta-evm.patch
+ADD meta-evm.patch /meta-evm.patch
 
 CMD /usr/bin/build
