@@ -63,7 +63,7 @@ $ cd yocto/tdx
 
 * Clone the Yocto meta layer source using yocto manifest as show below.
 ```
-$ repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx
+$ repo init -u https://github.com/flashbots/yocto-manifests.git -b bob-tdx
 ```
 A successful initialization will end with a message stating that Repo is
 initialized in your working directory. Your directory should now contain a
