@@ -10,7 +10,7 @@ git config --global color.ui true
 
 cd /build
 
-repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx
+repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx-rbuilder
 repo sync
 
 source setup
