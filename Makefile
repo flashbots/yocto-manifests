@@ -1,5 +1,5 @@
 DOCKER?=docker
-YOCTO_ENV_FILE?=yocto.env
+YOCTO_ENV_FILE?=yocto_build_config.env
 
 .PHONY: azure-image
 azure-image: tdx-poky
