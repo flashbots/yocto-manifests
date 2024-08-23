@@ -4,7 +4,7 @@
 
   <default sync-j="4"/>
 
-  <project remote="flashbots"       revision="tdx"              name="yocto-scripts"                   path="srcs/yocto-scripts">
+  <project remote="flashbots"       revision="tdx-rbuilder"     name="yocto-scripts"                   path="srcs/yocto-scripts">
        <copyfile dest="setup"       src="setup"/>
        <copyfile dest="Makefile"    src="Makefile"/>
   </project>
