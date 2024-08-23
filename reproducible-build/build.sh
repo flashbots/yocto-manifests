@@ -17,4 +17,4 @@ source setup
 
 make build || true
 
-sudo cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
+cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
