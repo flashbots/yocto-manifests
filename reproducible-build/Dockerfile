@@ -6,7 +6,4 @@ RUN apt install -y repo
 ADD build.sh /usr/bin/build
 RUN chmod +x /usr/bin/build
 
-ARG SSH_KEY
-ENV SEARCHER_SSH_KEY=$SSH_KEY
-
 CMD /usr/bin/build
