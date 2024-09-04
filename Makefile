@@ -14,8 +14,8 @@ tdx-poky: check-ssh-key
 
 .PHONY: check-ssh-key
 check-ssh-key:
-	@if grep -q '^SSH_KEY=$$' $(YOCTO_ENV_FILE); then \
-		echo "Error: SSH_KEY is not set in $(YOCTO_ENV_FILE)"; \
+	@if grep -q "^SEARCHER_SSH_KEY=$$" $(YOCTO_ENV_FILE); then \
+		echo "Error: SEARCHER_SSH_KEY is not set in $(YOCTO_ENV_FILE)"; \
 		exit 1; \
 	fi
 	
