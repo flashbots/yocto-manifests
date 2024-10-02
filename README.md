@@ -63,7 +63,7 @@ $ cd yocto/tdx
 
 * Clone the Yocto meta layer source using yocto manifest as show below.
 ```
-$ repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx
+$ repo init -u https://github.com/flashbots/yocto-manifests.git -b tdx-rbuilder
 ```
 A successful initialization will end with a message stating that Repo is
 initialized in your working directory. Your directory should now contain a
@@ -87,6 +87,10 @@ $ repo start <branch_name> --all
 ```
 $ source setup
 ```
+> **Note:** if you are building on ubuntu 24.04, yocto bitbake build will fail due to apparmor strict profile update.
+>
+> Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010)
+
 
 7. Build the image by using the provided `Makefile`.
 ```
