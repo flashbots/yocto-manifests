@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: warp-ubuntu-latest-x64-16x
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Restore cached build dependencies
+      id: cache-build-restore
+      uses: WarpBuilds/cache/restore@v1
+      with:
+        path: build
+        key: ${{ runner.os }}-build
+
+    - name: build
+      run: |
+        make azure-image
+
+    - name: Cache build dependencies
+      id: cache-build-save
+      uses: WarpBuilds/cache/save@v1
+      with:
+        path: build
+        key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
