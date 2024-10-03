@@ -7,9 +7,13 @@ on:
       - tdx-rbuilder-ci
   workflow_dispatch:
 
+env:
+  ARTIFACTS_LIST: | # artifacts to upload, one per line
+    cvm-image-azure-tdx.rootfs.wic
+
 jobs:
   release:
-    runs-on: warp-ubuntu-latest-x64-16x
+    runs-on: warp-custom-ubuntu-2204-x64-32x-highdisk
 
     steps:
     - name: Checkout code
@@ -22,9 +26,16 @@ jobs:
         path: build
         key: ${{ runner.os }}-yocto-manifests-build
 
-    # - name: build
-    #   run: |
-    #     make azure-image
+    - name: build
+      run: |
+        make azure-image
+
+    - name: Cache build dependencies
+      id: cache-build-save
+      uses: WarpBuilds/cache/save@v1
+      with:
+        path: build
+        key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
 
     - name: Install rclone
       run: |
@@ -32,17 +43,19 @@ jobs:
         sudo dpkg -i rclone.deb
         rm -f rclone.deb
 
-    - name: Create test artifact # TODO: remove
-      run: |
-        mkdir -p reproducible-build/artifacts
-        echo "test artifact" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
-        ln -s /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic
+    # - name: Create test artifact # TODO: remove
+    #   run: |
+    #     mkdir -p reproducible-build/artifacts
+    #     echo "test artifact" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
+    #     echo "test artifact 2" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic.test
+    #     ln -rs ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic
 
     - name: Upload build artifacts
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       run: |
+        # Setup rclone
         mkdir -p ~/.config/rclone
         cat <<EOF > ~/.config/rclone/rclone.conf
         [r2]
@@ -55,15 +68,30 @@ jobs:
         no_check_bucket = true
         EOF
 
-        rclone copy -v --transfers=2 --s3-upload-concurrency=40 \
-          --contimeout=10m --retries 10 --retries-sleep 60s --error-on-no-transfer \
-          --fast-list --checksum --copy-links \
-          /artifacts/cvm-image-azure-tdx.rootfs.wic \
-          r2:flashbots-public-artifacts/images/cvm-image-azure-tdx.rootfs.wic
+        # Upload artifacts
+        TODAY_DATE=$(date +"%Y/%m/%d")
+        rclone copy -v --transfers=4 --s3-upload-concurrency=20 \
+          --contimeout=1m --retries 3 --retries-sleep 30s \
+          --fast-list --checksum --copy-links --files-from <(echo "$ARTIFACTS_LIST") \
+          reproducible-build/artifacts \
+          r2:flashbots-public-artifacts/tdx-vm-images/$TODAY_DATE
 
-    - name: Cache build dependencies
-      id: cache-build-save
-      uses: WarpBuilds/cache/save@v1
-      with:
-        path: build
-        key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+        # Sync today's artifacts to latest
+        rclone sync -v --transfers=4 --contimeout=1m --retries 3 \
+          --retries-sleep 30s --fast-list --checksum \
+          r2:flashbots-public-artifacts/tdx-vm-images/$TODAY_DATE \
+          r2:flashbots-public-artifacts/tdx-vm-images/latest
+
+    - name: Show upload stats
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      run: |
+        UPLOADED_ARTIFACTS_STATS=$(rclone size r2:flashbots-public-artifacts/tdx-vm-images/latest --json)
+        UPLOADED_ARTIFACTS_SIZE=$(echo "$UPLOADED_ARTIFACTS_STATS" | jq '.bytes' | numfmt --to=iec)
+        UPLOADED_ARTIFACTS_COUNT=$(echo "$UPLOADED_ARTIFACTS_STATS" | jq '.count')
+        echo "✅ Successfully uploaded $UPLOADED_ARTIFACTS_COUNT artifacts (total size $UPLOADED_ARTIFACTS_SIZE):"
+        echo "$ARTIFACTS_LIST"
+
+    # - name: Setup ssh session
+    #   uses: Warpbuilds/action-debugger@v1.3
