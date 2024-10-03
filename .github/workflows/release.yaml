@@ -28,7 +28,7 @@ jobs:
 
     - name: Install rclone
       run: |
-        curl -fSSL https://downloads.rclone.org/v1.68.1/rclone-v1.68.1-linux-amd64.deb -o rclone.deb
+        curl -fsSL https://downloads.rclone.org/v1.68.1/rclone-v1.68.1-linux-amd64.deb -o rclone.deb
         sudo dpkg -i rclone.deb
         rm -f rclone.deb
 
@@ -44,7 +44,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       run:
         mkdir -p ~/.config/rclone
-        echo <<EOF > ~/.config/rclone/rclone.conf
+        cat <<EOF > ~/.config/rclone/rclone.conf
         [r2]
         type = s3
         provider = Cloudflare
