@@ -26,6 +26,40 @@ jobs:
       run: |
         make azure-image
 
+    - name: Install rclone
+      run: |
+        curl -fSSL https://downloads.rclone.org/v1.68.1/rclone-v1.68.1-linux-amd64.deb -o rclone.deb
+        sudo dpkg -i rclone.deb
+        rm -f rclone.deb
+
+    - name: Create test artifact
+      run: |
+        echo "test artifact" > /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
+        ln -s /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic /artifacts/cvm-image-azure-tdx.rootfs.wic
+
+    - name: Upload build artifacts
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      run:
+        mkdir -p ~/.config/rclone
+        echo <<EOF > ~/.config/rclone/rclone.conf
+        [r2]
+        type = s3
+        provider = Cloudflare
+        env_auth = true
+        endpoint = ${{ secrets.R2_BUCKET_ENDPOINT }}
+        region = auto
+        acl = private
+        no_check_bucket = true
+        EOF
+
+        rclone copy -v --transfers=2 --s3-upload-concurrency=40 \
+          --contimeout=10m --retries 10 --retries-sleep 60s --error-on-no-transfer \
+          --fast-list --checksum --copy-links \
+          /artifacts/cvm-image-azure-tdx.rootfs.wic \
+          r2:flashbots-public-artifacts/images/cvm-image-azure-tdx.rootfs.wic
+
     - name: Cache build dependencies
       id: cache-build-save
       uses: WarpBuilds/cache/save@v1
