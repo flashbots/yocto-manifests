@@ -22,9 +22,9 @@ jobs:
         path: build
         key: ${{ runner.os }}-yocto-manifests-build
 
-    - name: build
-      run: |
-        make azure-image
+    # - name: build
+    #   run: |
+    #     make azure-image
 
     - name: Install rclone
       run: |
@@ -32,10 +32,11 @@ jobs:
         sudo dpkg -i rclone.deb
         rm -f rclone.deb
 
-    - name: Create test artifact
+    - name: Create test artifact # TODO: remove
       run: |
-        echo "test artifact" > /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
-        ln -s /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic /artifacts/cvm-image-azure-tdx.rootfs.wic
+        mkdir -p reproducible-build/artifacts
+        echo "test artifact" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
+        ln -s /artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic
 
     - name: Upload build artifacts
       env:
