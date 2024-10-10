@@ -10,6 +10,11 @@ on:
 env:
   ARTIFACTS_LIST: | # artifacts to upload, one per line
     cvm-image-azure-tdx.rootfs.wic
+  ARTIFACTS_DIR: reproducible-build/artifacts
+  BB_ENV_PASSTHROUGH_ADDITIONS: "DL_DIR SSTATE_DIR"
+  BITBAKE_CACHE: "${HOME}/bitbake-cache"
+  DL_DIR: "${BITBAKE_CACHE}/downloads"
+  SSTATE_DIR: "${BITBAKE_CACHE}/sstate"
 
 jobs:
   release:
@@ -19,14 +24,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Create cache dir
+      run: |
+        mkdir -p ${DL_DIR} ${SSTATE_DIR}
+
     - name: Restore cached build dependencies
       id: cache-build-restore
       uses: WarpBuilds/cache/restore@v1
       with:
-        path: build
-        key: ${{ runner.os }}-yocto-manifests-build
+        path: ${{ env.BITBAKE_CACHE }}
+        key: ${{ runner.os }}-yocto-manifests
 
-    - name: build
+    - name: Build
       run: |
         make azure-image
 
@@ -34,7 +43,7 @@ jobs:
       id: cache-build-save
       uses: WarpBuilds/cache/save@v1
       with:
-        path: build
+        path: ${{ env.BITBAKE_CACHE }}
         key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
 
     - name: Install rclone
@@ -43,12 +52,17 @@ jobs:
         sudo dpkg -i rclone.deb
         rm -f rclone.deb
 
-    # - name: Create test artifact # TODO: remove
-    #   run: |
-    #     mkdir -p reproducible-build/artifacts
-    #     echo "test artifact" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic
-    #     echo "test artifact 2" > ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic.test
-    #     ln -rs ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs-20241002143710.wic ./reproducible-build/artifacts/cvm-image-azure-tdx.rootfs.wic
+    - name: Resolve real paths of artifacts
+      run: |
+        REALPATH_ARTIFACTS_LIST=$(find ${ARTIFACTS_DIR} -maxdepth 1 -exec realpath {} \;)
+        echo "REALPATH_ARTIFACTS_LIST=$REALPATH_ARTIFACTS_LIST" >> $GITHUB_ENV
+
+    - name: Calculate hashsums of artifacts
+      run: |
+        cd ${ARTIFACTS_DIR}
+        for artifact in $REALPATH_ARTIFACTS_LIST; do
+          sha256sum $artifact > $artifact.sha256
+        done
 
     - name: Upload build artifacts
       env:
@@ -72,8 +86,8 @@ jobs:
         TODAY_DATE=$(date +"%Y/%m/%d")
         rclone copy -v --transfers=4 --s3-upload-concurrency=20 \
           --contimeout=1m --retries 3 --retries-sleep 30s \
-          --fast-list --checksum --copy-links --files-from <(echo "$ARTIFACTS_LIST") \
-          reproducible-build/artifacts \
+          --fast-list --checksum --copy-links --files-from <(echo "$REALPATH_ARTIFACTS_LIST") \
+          ${ARTIFACTS_DIR} \
           r2:flashbots-public-artifacts/tdx-vm-images/$TODAY_DATE
 
         # Sync today's artifacts to latest
@@ -92,6 +106,3 @@ jobs:
         UPLOADED_ARTIFACTS_COUNT=$(echo "$UPLOADED_ARTIFACTS_STATS" | jq '.count')
         echo "✅ Successfully uploaded $UPLOADED_ARTIFACTS_COUNT artifacts (total size $UPLOADED_ARTIFACTS_SIZE):"
         echo "$ARTIFACTS_LIST"
-
-    # - name: Setup ssh session
-    #   uses: Warpbuilds/action-debugger@v1.3
