@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - tdx-rbuilder-ci
+  workflow_dispatch:
+
+env:
+  ARTIFACTS_LIST: | # artifacts to upload, one per line
+    cvm-image-azure-tdx.rootfs.wic
+  ARTIFACTS_DIR: reproducible-build/artifacts
+  BB_ENV_PASSTHROUGH_ADDITIONS: "DL_DIR SSTATE_DIR"
+  BITBAKE_CACHE: "${HOME}/bitbake-cache"
+  DL_DIR: "${BITBAKE_CACHE}/downloads"
+  SSTATE_DIR: "${BITBAKE_CACHE}/sstate"
+
+jobs:
+  release:
+    runs-on: warp-custom-ubuntu-2204-x64-32x-highdisk
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create cache dir
+      run: |
+        mkdir -p ${DL_DIR} ${SSTATE_DIR}
+
+    - name: Restore cached build dependencies
+      id: cache-build-restore
+      uses: WarpBuilds/cache/restore@v1
+      with:
+        path: ${{ env.BITBAKE_CACHE }}
+        key: ${{ runner.os }}-yocto-manifests
+
+    - name: Build
+      run: |
+        make azure-image
+
+    - name: Cache build dependencies
+      id: cache-build-save
+      uses: WarpBuilds/cache/save@v1
+      with:
+        path: ${{ env.BITBAKE_CACHE }}
+        key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+
+    - name: Install rclone
+      run: |
+        curl -fsSL https://downloads.rclone.org/v1.68.1/rclone-v1.68.1-linux-amd64.deb -o rclone.deb
+        sudo dpkg -i rclone.deb
+        rm -f rclone.deb
+
+    - name: Resolve real paths of artifacts
+      run: |
+        REALPATH_ARTIFACTS_LIST=$(find ${ARTIFACTS_DIR} -maxdepth 1 -exec realpath {} \;)
+        echo "REALPATH_ARTIFACTS_LIST=$REALPATH_ARTIFACTS_LIST" >> $GITHUB_ENV
+
+    - name: Calculate hashsums of artifacts
+      run: |
+        cd ${ARTIFACTS_DIR}
+        for artifact in $REALPATH_ARTIFACTS_LIST; do
+          sha256sum $artifact > $artifact.sha256
+        done
+
+    - name: Upload build artifacts
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      run: |
+        # Setup rclone
+        mkdir -p ~/.config/rclone
+        cat <<EOF > ~/.config/rclone/rclone.conf
+        [r2]
+        type = s3
+        provider = Cloudflare
+        env_auth = true
+        endpoint = ${{ secrets.R2_BUCKET_ENDPOINT }}
+        region = auto
+        acl = private
+        no_check_bucket = true
+        EOF
+
+        # Upload artifacts
+        TODAY_DATE=$(date +"%Y/%m/%d")
+        rclone copy -v --transfers=4 --s3-upload-concurrency=20 \
+          --contimeout=1m --retries 3 --retries-sleep 30s \
+          --fast-list --checksum --copy-links --files-from <(echo "$REALPATH_ARTIFACTS_LIST") \
+          ${ARTIFACTS_DIR} \
+          r2:flashbots-public-artifacts/tdx-vm-images/$TODAY_DATE
+
+        # Sync today's artifacts to latest
+        rclone sync -v --transfers=4 --contimeout=1m --retries 3 \
+          --retries-sleep 30s --fast-list --checksum \
+          r2:flashbots-public-artifacts/tdx-vm-images/$TODAY_DATE \
+          r2:flashbots-public-artifacts/tdx-vm-images/latest
+
+    - name: Show upload stats
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      run: |
+        UPLOADED_ARTIFACTS_STATS=$(rclone size r2:flashbots-public-artifacts/tdx-vm-images/latest --json)
+        UPLOADED_ARTIFACTS_SIZE=$(echo "$UPLOADED_ARTIFACTS_STATS" | jq '.bytes' | numfmt --to=iec)
+        UPLOADED_ARTIFACTS_COUNT=$(echo "$UPLOADED_ARTIFACTS_STATS" | jq '.count')
+        echo "✅ Successfully uploaded $UPLOADED_ARTIFACTS_COUNT artifacts (total size $UPLOADED_ARTIFACTS_SIZE):"
+        echo "$ARTIFACTS_LIST"
