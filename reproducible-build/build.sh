@@ -13,7 +13,7 @@ cd /build
 repo init -u https://github.com/flashbots/yocto-manifests.git -b main -m ${MANIFEST_FILE}
 repo sync
 
-source setup
+source setup || true
 
 make build || true
 
