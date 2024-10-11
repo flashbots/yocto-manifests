@@ -6,29 +6,26 @@ YOCTO_ENV_FILE?=env_files/tdx-base_yocto_build_config.env
 .PHONY: image-rbuilder image-bob image-base prepare-dirs tdx-poky
 
 image-rbuilder: prepare-dirs
-	$(DOCKER) build -t yocto-builder:rbuilder -f reproducible-build/Dockerfile --build-arg MANIFEST=tdx-rbuilder.xml .
+	$(DOCKER) build -t yocto-builder:rbuilder --build-arg MANIFEST=tdx-rbuilder.xml reproducible-build/
 	$(DOCKER) run --rm --env-file env_files/rbuilder_yocto_build_config.env \
 		-v $(CURDIR)/reproducible-build/artifacts-rbuilder:/artifacts \
 		-v $(CURDIR)/build:/build \
-		--build-arg MANIFEST=tdx-rbuilder.xml \
 		yocto-builder:rbuilder
 	chmod 0755 build reproducible-build/artifacts-rbuilder
 
 image-bob: prepare-dirs check-ssh-key
-	$(DOCKER) build -t yocto-builder:bob -f reproducible-build/Dockerfile --build-arg MANIFEST=tdx-bob.xml .
+	$(DOCKER) build -t yocto-builder:bob --build-arg MANIFEST=tdx-bob.xml reproducible-build/
 	$(DOCKER) run --rm --env-file env_files/bob_yocto_build_config.env \
 		-v $(CURDIR)/reproducible-build/artifacts-bob:/artifacts \
 		-v $(CURDIR)/build:/build \
-		--build-arg MANIFEST=tdx-bob.xml \
 		yocto-builder:bob
 	chmod 0755 build reproducible-build/artifacts-bob
 
 image-base: prepare-dirs
-	$(DOCKER) build -t yocto-builder:base -f reproducible-build/Dockerfile --build-arg MANIFEST=tdx-base.xml .
-	$(DOCKER) run --rm --env-file env_files/base_yocto_build_config.env \
+	$(DOCKER) build -t yocto-builder:base --build-arg MANIFEST=tdx-base.xml reproducible-build/
+	$(DOCKER) run --rm --env-file env_files/tdx-base_yocto_build_config.env \
 		-v $(CURDIR)/reproducible-build/artifacts-base:/artifacts \
 		-v $(CURDIR)/build:/build \
-		--build-arg MANIFEST=tdx-base.xml \
 		yocto-builder:base
 	chmod 0755 build reproducible-build/artifacts-base
 
