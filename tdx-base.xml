@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="flashbots"  fetch="https://github.com/flashbots"/>
+
+  <default sync-j="4"/>
+
+  <project remote="flashbots"       revision="tdx"              name="yocto-scripts"                   path="srcs/yocto-scripts">
+       <copyfile dest="setup"       src="setup"/>
+       <copyfile dest="Makefile"    src="Makefile"/>
+  </project>
+
+  <project remote="flashbots"       revision="scarthgap"        name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="scarthgap"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
+  <project remote="flashbots"       revision="main"             name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
+
+</manifest>

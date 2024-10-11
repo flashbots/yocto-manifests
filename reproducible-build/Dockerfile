@@ -6,4 +6,7 @@ RUN apt install -y repo
 ADD build.sh /usr/bin/build
 RUN chmod +x /usr/bin/build
 
+ARG MANIFEST
+ENV MANIFEST_FILE=${MANIFEST}
+
 CMD /usr/bin/build
