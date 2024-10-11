@@ -89,8 +89,7 @@ $ source setup
 ```
 > **Note:** if you are building on ubuntu 24.04, yocto bitbake build will fail due to apparmor strict profile update.
 >
-> Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010)
-
+> Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010) \
 
 7. Build the image by using the provided `Makefile`.
 ```
@@ -117,3 +116,17 @@ $ repo sync
 ```
 ## Docker build env
 There is also [poky-container](https://github.com/crops/poky-container/) as an alternative docker build environment to build your yocto projects with it.
+
+## Alternative Build with Docker
+1. Clone this repo
+```
+$ git clone https://github.com/flashbots/yocto-manifests.git
+``` 
+2. adjust the yocto build configuration in [env_files](https://github.com/flashbots/yocto-manifests/tree/main/env_files) for the target image you want to build 
+3. make the desired image using, these are the current options: 
+   - image-base: builds a basic tdx-image and outputs the image artifacts in */reproducile-build/artifacts-base*
+   - image-bob: builds the image for the BOB project with the searcher embedded ss-key and podman support and outputs the image artifacts in */reproducile-build/artifacts-bob*
+   - image-rbuilder: builds the image for with rbuilder/reth/lighthouse and outputs the image artifacts in */reproducile-build/artifacts-rbuilder*
+```
+$ make image-<target-name>
+```
