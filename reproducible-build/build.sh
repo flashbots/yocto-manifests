@@ -21,5 +21,4 @@ cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
 
 make gen-measurements || true
 
-mkdir -p /artifacts/measurements
 cp --dereference /build/measurements/* /artifacts/measurements/.

@@ -39,8 +39,10 @@ image-base: prepare-dirs ### Build a TDX general purpose base image, by default 
 prepare-dirs: ### Internal target preparing artifact directories
 	mkdir -p $(BASE_BUILD_DIR)/rbuilder $(BASE_BUILD_DIR)/bob $(BASE_BUILD_DIR)/base
 	mkdir -p $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-base
-	chmod --recursive 0777 $(BASE_BUILD_DIR)/rbuilder $(BASE_BUILD_DIR)/bob $(BASE_BUILD_DIR)/base \
-		$(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-base
+	mkdir -p $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder/measurements $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob/measurements $(REPRODUCIBLE_BUILD_DIR)/artifacts-base/measurements
+	chmod 0777 $(BASE_BUILD_DIR)/rbuilder $(BASE_BUILD_DIR)/bob $(BASE_BUILD_DIR)/base \
+		$(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-base \
+		$(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder/measurements $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob/measurements $(REPRODUCIBLE_BUILD_DIR)/artifacts-base/measurements
 
 .PHONY: check-ssh-key
 check-ssh-key: ### Internal target checking a pubkey for bob image is provided
