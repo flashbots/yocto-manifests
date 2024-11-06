@@ -15,7 +15,18 @@ setup a Yocto Project build environment for you!
 
 * **default.xml** - External releasable components. Used for release builds.
 
-## Getting Started
+## Reproducing image measurements
+
+**Make sure you are checked out on the correct commit (in this repo).**
+
+Building images is as simple as installing docker, and running `make image-<>`. For list of images run `make help`.  
+Make sure you have plenty of disk space available (200 GBs), and that your session will not time out as a fresh build can take a couple of hours on slow hardware.  
+
+Measurements will be available in <> once the image build process is finished.  
+
+## Preparing your host for non-docker builds
+
+**If you only want to build images, see the "Building images" section above. This is only required if you want to build images on your physical host and is aimed at image developers**
 
 1. See the [Preparing Build Host](https://docs.yoctoproject.org/singleindex.html#preparing-the-build-host)
    documentation to install essential host packages on your build host. The
@@ -91,26 +102,14 @@ $ source setup
 >
 > Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010) \
 
-7. Build the image by using the provided `Makefile`. 
+
+7. Build the images!
+
+Your host is now ready to build images.  
+
 > **Note:** Make sure you are exporting the env vars you want to enable/disable yocto build time configuration. \
 > Please inspect the [env_files](./env_files/) and export the desired ones as env variables before trigger the build. \
 > e.g. export DEBUG_TWEAKS_ENABLED=1. This builds the image in debug mode and enable root ssh access for dev/debug purposes
-
-```
-$ make build
-```
-
-8. Generate the measurements values after building the image. They will be located in measurements directory
-```
-$ make gen-measurements
-```
-> **Note:** to generate the measurements, you need to make sure that you have `python3`, `libssl-dev` and the `signify` module installed.
->
->$ sudo apt-get install python3 libssl-dev 
->
->$ ln -s /usr/bin/python3 /usr/bin/python 
->
->$ pip install signify
 
 ## Staying Up to Date
 
