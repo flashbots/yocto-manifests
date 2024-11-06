@@ -15,7 +15,7 @@ image-rbuilder: prepare-dirs ### Build rbuilder image, by default outputs to rep
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder:/artifacts \
 		-v $(BASE_BUILD_DIR)/rbuilder:/build \
 		yocto-builder:rbuilder
-	chmod --recursive 0755 $(BASE_BUILD_DIR)/rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder
+	chmod 0755 $(BASE_BUILD_DIR)/rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder/measurements
 
 .PHONY: image-bob
 image-bob: prepare-dirs check-ssh-key ### Build bob image, by default outputs to reproducile-build/artifacts-bob. Make sure you update the ssh pubkey in env_files/bob_yocto_build_config.env
@@ -24,7 +24,7 @@ image-bob: prepare-dirs check-ssh-key ### Build bob image, by default outputs to
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob:/artifacts \
 		-v $(BASE_BUILD_DIR)/bob:/build \
 		yocto-builder:bob
-	chmod --recursive 0755 $(BASE_BUILD_DIR)/bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob
+	chmod 0755 $(BASE_BUILD_DIR)/bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob/measurements
 
 .PHONY: image-base
 image-base: prepare-dirs ### Build a TDX general purpose base image, by default outputs to reproducile-build/artifacts-base
@@ -33,7 +33,7 @@ image-base: prepare-dirs ### Build a TDX general purpose base image, by default 
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-base:/artifacts \
 		-v $(BASE_BUILD_DIR)/base:/build \
 		yocto-builder:base
-	chmod --recursive 0755 $(BASE_BUILD_DIR)/base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base
+	chmod 0755 $(BASE_BUILD_DIR)/base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base/measurements
 
 .PHONY: prepare-dirs
 prepare-dirs: ### Internal target preparing artifact directories
