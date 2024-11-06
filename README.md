@@ -22,7 +22,7 @@ setup a Yocto Project build environment for you!
 Building images is as simple as installing docker, and running `make image-<name>`. For list of images run `make help`.  
 Make sure you have plenty of disk space available (200 GBs), and that your session will not time out as a fresh build can take over an hour on slow hardware.  
 
-Built iages as well as measurements will be available in `./reproducible-build/artifacts-<image name>`.  
+Built images as well as measurements will be available in `./reproducible-build/artifacts-<image name>`.  
 
 ## Preparing your host for non-docker builds
 
