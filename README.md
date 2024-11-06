@@ -91,7 +91,11 @@ $ source setup
 >
 > Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010) \
 
-7. Build the image by using the provided `Makefile`.
+7. Build the image by using the provided `Makefile`. 
+> **Note:** Make sure you are exporting the env vars you want to enable/disable yocto build time configuration. \
+> Please inspect the [env_files](./env_files/) and export the desired ones as env variables before trigger the build. \
+> e.g. export DEBUG_TWEAKS_ENABLED=1. This builds the image in debug mode and enable root ssh access for dev/debug purposes
+
 ```
 $ make build
 ```
