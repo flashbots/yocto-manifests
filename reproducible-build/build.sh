@@ -18,7 +18,3 @@ source setup || true
 make build || true
 
 cp --dereference /build/srcs/poky/build/tmp/deploy/images/tdx/* /artifacts/.
-
-make gen-measurements || true
-
-cp --dereference /build/measurements/* /artifacts/measurements/.
