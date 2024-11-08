@@ -2,7 +2,11 @@
 
 set -e
 
-for image in /artifacts/* do
-	output_file=measurement-$(sed -e "s|\..*||"e)).json
-	/app/measured-boot $file /artifacts/measurements/$output_file
+source /build/srcs/poky/oe-init-build-env
+
+for image in /artifacts/*
+do
+	image_name=$(basename $image | sed -e "s|\..*||")
+	output_file=measurement-${image_name}.json
+	/app/measured-boot $image /artifacts/measurements/$output_file
 done
