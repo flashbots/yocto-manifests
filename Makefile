@@ -15,14 +15,13 @@ image-rbuilder: measurements-image prepare-dirs ### Build rbuilder image, by def
 	#		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder:/artifacts \
 	#	-v $(BASE_BUILD_DIR)/rbuilder:/build \
 	#	yocto-builder:rbuilder
-	$(DOCKER) run --rm --env-file env_files/rbuilder_yocto_build_config.env \
+	$(DOCKER) run --rm \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder:/artifacts \
-		-v $(BASE_BUILD_DIR)/rbuilder:/build \
-		yocto-measurements:rbuilder
+		yocto-measurements:latest
 	chmod 0755 $(BASE_BUILD_DIR)/rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder/measurements
 
 .PHONY: image-bob
-image-bob: prepare-dirs check-ssh-key ### Build bob image, by default outputs to reproducile-build/artifacts-bob. Make sure you update the ssh pubkey in env_files/bob_yocto_build_config.env
+image-bob: measurements-image prepare-dirs check-ssh-key ### Build bob image, by default outputs to reproducile-build/artifacts-bob. Make sure you update the ssh pubkey in env_files/bob_yocto_build_config.env
 	$(DOCKER) build -t yocto-builder:bob --build-arg MANIFEST=tdx-bob.xml $(REPRODUCIBLE_BUILD_DIR)
 	$(DOCKER) run --rm --env-file env_files/bob_yocto_build_config.env \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob:/artifacts \
@@ -31,7 +30,7 @@ image-bob: prepare-dirs check-ssh-key ### Build bob image, by default outputs to
 	chmod 0755 $(BASE_BUILD_DIR)/bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob/measurements
 
 .PHONY: image-base
-image-base: prepare-dirs ### Build a TDX general purpose base image, by default outputs to reproducile-build/artifacts-base
+image-base: measurements-image prepare-dirs ### Build a TDX general purpose base image, by default outputs to reproducile-build/artifacts-base
 	$(DOCKER) build -t yocto-builder:base --build-arg MANIFEST=tdx-base.xml $(REPRODUCIBLE_BUILD_DIR)
 	$(DOCKER) run --rm --env-file env_files/tdx-base_yocto_build_config.env \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-base:/artifacts \
@@ -41,7 +40,7 @@ image-base: prepare-dirs ### Build a TDX general purpose base image, by default 
 
 .PHONY: measurements-image
 measurements-image: ### Internal target preparing measurements image
-	$(DOCKER) build -t yocto-measurements:rbuilder -f reproducible-build/measurements.Dockerfile $(REPRODUCIBLE_BUILD_DIR)
+	$(DOCKER) build -t yocto-measurements:latest -f reproducible-build/measurements.Dockerfile $(REPRODUCIBLE_BUILD_DIR)
 
 .PHONY: prepare-dirs
 prepare-dirs: ### Internal target preparing artifact directories
