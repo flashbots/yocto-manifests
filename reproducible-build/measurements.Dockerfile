@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build CGO_ENABLED=0 GOOS=linux \
 FROM ubuntu:22.04
 WORKDIR /app
 
-RUN apt update && apt install -y python3 parted libssl-dev python3-pip
+RUN apt update && apt install -y python3 parted libssl-dev python3-pip mtools
 RUN pip install signify
 
 COPY --from=builder /build/measured-boot /app/measured-boot
