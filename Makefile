@@ -51,7 +51,7 @@ image-base: measurements-image prepare-dirs ### Build a TDX general purpose base
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-base:/artifacts \
 		-v $(BASE_BUILD_DIR)/base:/build \
 		yocto-builder:base
-	chmod 0755 $(BASE_BUILD_DIR)/base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base/measurements
+	chmod 0755 $(BASE_BUILD_DIR)/base $(REPRODUCIBLE_BUILD_DIR)/artifacts-base
 
 .PHONY: measurements-base
 measurements-base: measurements-image image-base ### Generates measurements for base image. The measurements can be found in reproducible-build/artifacts-base/measurement-<image>.json.
