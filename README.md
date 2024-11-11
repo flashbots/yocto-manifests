@@ -11,6 +11,28 @@ single *manifest* file.  Tell repo to fetch a manifest from this repository and
 it will fetch the git repositories specified in the manifest and, by doing so,
 setup a Yocto Project build environment for you!
 
+## Build Environment Requirements
+
+### System Requirements
+- **Operating System**: Ubuntu 22.04 LTS (recommended for stability and reproducibility)
+- **Storage**: Minimum 300GB free disk space
+  - Required for build artifacts and output images
+  - SSD storage recommended for optimal performance
+- **Processor**: Minimum 16 CPU cores
+  - Builds are heavily parallelized
+  - More cores will significantly reduce build time
+- **Memory**: Minimum 16GB RAM (32GB recommended)
+
+### Recommended Setup
+- Dedicated build server for consistent and uninterrupted builds
+- Fast internet connection for downloading source packages
+- Regular system maintenance to ensure sufficient free space
+
+### Notes
+- Clean builds typically take 2-4 hours depending on hardware
+- Incremental builds are significantly faster
+- Consider using build containers for consistent environments across teams
+
 ## Manifest Files
 
 * **default.xml** - External releasable components. Used for release builds.
@@ -101,7 +123,7 @@ $ source setup
 ```
 > **Note:** if you are building on ubuntu 24.04, yocto bitbake build will fail due to apparmor strict profile update.
 >
-> Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010) \
+> Here is a workaround to fix the build issue [link](https://lists.yoctoproject.org/g/docs/topic/yocto_workaround_for/106220010)
 
 7. Build the image by using the provided `Makefile`.
 
