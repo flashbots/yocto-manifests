@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="flashbots"  fetch="https://github.com/flashbots"/>
+
+  <default sync-j="4"/>
+
+  <project remote="flashbots"       revision="unified"     name="yocto-scripts"                   path="yocto-scripts">
+       <copyfile dest="setup"       src="setup"/>
+       <copyfile dest="Makefile"    src="Makefile"/>
+  </project>
+
+  <project remote="flashbots"       revision="scarthgap"        name="poky"                            path="poky"/>
+  <project remote="flashbots"       revision="scarthgap"        name="meta-openembedded"               path="meta-openembedded"/>
+  <project remote="flashbots"       revision="scarthgap"        name="meta-secure-core"                path="meta-secure-core"/>
+  <project remote="flashbots"       revision="scarthgap"        name="meta-virtualization"             path="meta-virtualization"/>
+  <project remote="flashbots"       revision="scarthgap"        name="meta-clang"                      path="meta-clang"/>
+  <project remote="flashbots"       revision="machine_refactor" name="meta-confidential-compute"       path="meta-confidential-compute"/>
+  <project remote="flashbots"       revision="unified"             name="meta-evm"                        path="meta-evm"/>
+  <project remote="flashbots"       revision="master"           name="meta-rust-bin"                   path="meta-rust-bin"/>
+  <project remote="flashbots"       revision="unified"             name="meta-observability"              path="meta-observability"/>
+  <project remote="flashbots"       revision="machine_pr_podman_feature_flag"             name="meta-custom-podman"              path="meta-custom-podman"/>
+  <project remote="flashbots"       revision="unified"           name="meta-searcher"                   path="meta-searcher"/>
+</manifest>
