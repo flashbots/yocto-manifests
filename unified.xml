@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
   <remote name="flashbots"  fetch="https://github.com/flashbots"/>
+  <remote name="flashbots-ssh"  fetch="ssh://git@github.com:flashbots"/>  
 
   <default sync-j="4"/>
 
@@ -19,5 +20,5 @@
   <project remote="flashbots"       revision="master"           name="meta-rust-bin"                   path="meta-rust-bin"/>
   <project remote="flashbots"       revision="unified"             name="meta-observability"              path="meta-observability"/>
   <project remote="flashbots"       revision="machine_pr_podman_feature_flag"             name="meta-custom-podman"              path="meta-custom-podman"/>
-  <project remote="flashbots"       revision="unified"           name="meta-searcher"                   path="meta-searcher"/>
+  <project remote="flashbots-ssh"       revision="unified"           name="meta-searcher"                   path="meta-searcher" sync-s="false" sync-c="true" />
 </manifest>
