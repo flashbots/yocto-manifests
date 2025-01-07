@@ -35,6 +35,7 @@ The following environment variables can be set in env_files/rbuilder_yocto_build
 - `INIT_CONFIG_URL`: Builder initialization config URL
 - `DISK_ENCRYPTION_KEY_STORAGE`: Configure disk encryption key storage location (optional)
 - `SSH_PUBKEY`: SSH public key for access (optional)
+- `TARGET_LUN`: The logical unit number of the attached disk (optiona, default: 10)
 
 ## Usage
 ```bash

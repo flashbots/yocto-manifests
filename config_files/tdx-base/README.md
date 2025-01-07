@@ -22,6 +22,7 @@ This is the minimal TEE-enabled profile that serves as a foundation for other sp
 The following environment variables can be set to customize the build:
 - `DEBUG_TWEAKS_ENABLED`: Enable debug features (default: 1)
 - `DISK_ENCRYPTION_KEY_STORAGE`: Configure disk encryption key storage location (optional)
+- `TARGET_LUN`: The logical unit number of the attached disk (optiona, default: 10)
 
 ## Usage
 ```bash

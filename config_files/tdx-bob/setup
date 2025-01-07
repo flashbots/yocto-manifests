@@ -28,17 +28,26 @@ source oe-init-build-env
 verbose_output "Sourced the oe-init-build-env script"
 
 # Add the necessary layers to bblayers.conf
-bitbake-layers add-layer ../meta-confidential-compute
 bitbake-layers add-layer ../meta-openembedded/meta-oe
 bitbake-layers add-layer ../meta-openembedded/meta-python
-bitbake-layers add-layer ../meta-secure-core/meta-tpm2
 bitbake-layers add-layer ../meta-openembedded/meta-networking
 bitbake-layers add-layer ../meta-openembedded/meta-filesystems
-bitbake-layers add-layer ../meta-virtualization
-bitbake-layers add-layer ../meta-custom-podman
-bitbake-layers add-layer ../meta-searcher
+verbose_output "Added the meta-openembedded layers to bblayers.conf"
 
-verbose_output "Added the meta-evm and meta-confidential-compute layers to bblayers.conf"
+bitbake-layers add-layer ../meta-virtualization
+verbose_output "Added the meta-virtualization layer to bblayers.conf"
+
+bitbake-layers add-layer ../meta-secure-core/meta-tpm2
+verbose_output "Added the meta-tpm2 layer to bblayers.conf"
+
+bitbake-layers add-layer ../meta-confidential-compute
+verbose_output "Added the meta-confidential-compute layer to bblayers.conf"
+
+bitbake-layers add-layer ../meta-custom-podman
+verbose_output "Added the meta-custom-podman layer to bblayers.conf"
+
+bitbake-layers add-layer ../meta-searcher
+verbose_output "Added the meta-searcher layer to bblayers.conf"
 
 # Return to the original directory
 popd

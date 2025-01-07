@@ -27,10 +27,10 @@ verbose_output "Switched to $(pwd)"
 source oe-init-build-env
 verbose_output "Sourced the oe-init-build-env script"
 
-# Add the  meta-evm, meta-confidential-compute, meta-secure-core/meta-tpm2, meta-openembedded/meta-python, meta-openembedded/meta-oe layers meta-rust-bin meta-clang to bblayers.conf
+# Add the  meta-evm, meta-confidential-compute to bblayers.conf
 bitbake-layers add-layer ../meta-confidential-compute
 
-verbose_output "Added the meta-evm and meta-confidential-compute layers to bblayers.conf"
+verbose_output "Added the meta-confidential-compute layer to bblayers.conf"
 
 # Return to the original directory
 popd
