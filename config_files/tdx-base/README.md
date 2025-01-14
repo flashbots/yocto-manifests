@@ -13,7 +13,7 @@ This is the minimal TEE-enabled profile that serves as a foundation for other sp
 - poky: Base Yocto distribution
 
 ## Build Configuration
-- Image Type: `cvm-image-azure`
+- Image Type: `core-image-minimal`
 - Package Format: IPK
 - Supported Machine: tdx
 - Distribution: cvm
