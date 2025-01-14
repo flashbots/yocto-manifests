@@ -18,7 +18,7 @@ This profile creates a specialized image for running searcher nodes in confident
 - poky: Base Yocto distribution
 
 ## Build Configuration
-- Image Type: `cvm-image-azure`
+- Image Type: `core-image-minimal`
 - Package Format: IPK
 - Supported Machine: tdx
 - Distribution: cvm
