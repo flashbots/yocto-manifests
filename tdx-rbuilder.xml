@@ -14,9 +14,9 @@
   <project remote="flashbots"       revision="scarthgap"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="scarthgap"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
   <project remote="flashbots"       revision="scarthgap"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
-  <project remote="flashbots"       revision="b41056b507a678fd0a702b9d1138a2e25d8c51b5"             name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
-  <project remote="flashbots"       revision="efabf0a22cbe19d8dc0ae8674f2716e1849b74d7"             name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="91ed5d886831d6c9e9f8a9695c8f1b306f09cb94"             name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
+  <project remote="flashbots"       revision="64ff8fbc409870bd45e56221616e25eb4d62863c"             name="meta-evm"                        path="srcs/poky/meta-evm"/>
   <project remote="flashbots"       revision="master"           name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
-  <project remote="flashbots"       revision="main"             name="meta-observability"              path="srcs/poky/meta-observability"/>
+  <project remote="flashbots"       revision="ec8129a2c1e20a0bff5185f56c78a8d54af9182a"             name="meta-observability"              path="srcs/poky/meta-observability"/>
   <project remote="flashbots"       revision="main"             name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
 </manifest>
