@@ -4,13 +4,15 @@ DOCKER?=docker
 BASE_BUILD_DIR := $(CURDIR)/build
 REPRODUCIBLE_BUILD_DIR := $(CURDIR)/reproducible-build
 
+REVISION?=$(shell git branch --show-current 2>/dev/null || echo main)
+
 .PHONY: help
 help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 .PHONY: image-rbuilder
 image-rbuilder: prepare-dirs ### Build rbuilder image, by default outputs to reproducile-build/artifacts-rbuilder
-	$(DOCKER) build -t yocto-builder:rbuilder --build-arg MANIFEST=tdx-rbuilder.xml $(REPRODUCIBLE_BUILD_DIR)
+	$(DOCKER) build -t yocto-builder:rbuilder --build-arg MANIFEST=tdx-rbuilder.xml --build-arg REVISION=$(REVISION) $(REPRODUCIBLE_BUILD_DIR)
 	$(DOCKER) run --rm --env-file env_files/rbuilder_yocto_build_config.env \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-rbuilder:/artifacts \
 		-v $(BASE_BUILD_DIR)/rbuilder:/build \
@@ -28,7 +30,7 @@ measurements-rbuilder: measurements-image image-rbuilder ### Generates measureme
 
 .PHONY: image-bob
 image-bob: measurements-image prepare-dirs check-ssh-key ### Build bob image, by default outputs to reproducile-build/artifacts-bob. Make sure you update the ssh pubkey in env_files/bob_yocto_build_config.env
-	$(DOCKER) build -t yocto-builder:bob --build-arg MANIFEST=tdx-bob.xml $(REPRODUCIBLE_BUILD_DIR)
+	$(DOCKER) build -t yocto-builder:bob --build-arg MANIFEST=tdx-bob.xml --build-arg REVISION=$(REVISION) $(REPRODUCIBLE_BUILD_DIR)
 	$(DOCKER) run --rm --env-file env_files/bob_yocto_build_config.env \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-bob:/artifacts \
 		-v $(BASE_BUILD_DIR)/bob:/build \
@@ -46,7 +48,7 @@ measurements-bob: measurements-image image-bob ### Generates measurements for bo
 
 .PHONY: image-base
 image-base: measurements-image prepare-dirs ### Build a TDX general purpose base image, by default outputs to reproducile-build/artifacts-base
-	$(DOCKER) build -t yocto-builder:base --build-arg MANIFEST=tdx-base.xml $(REPRODUCIBLE_BUILD_DIR)
+	$(DOCKER) build -t yocto-builder:base --build-arg MANIFEST=tdx-base.xml --build-arg REVISION=$(REVISION) $(REPRODUCIBLE_BUILD_DIR)
 	$(DOCKER) run --rm --env-file env_files/tdx-base_yocto_build_config.env \
 		-v $(REPRODUCIBLE_BUILD_DIR)/artifacts-base:/artifacts \
 		-v $(BASE_BUILD_DIR)/base:/build \
