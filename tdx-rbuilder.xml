@@ -19,8 +19,8 @@
   <project remote="flashbots"       revision="c5627ab06fc07221237b9a7059ac378ea80578f8"        name="poky"                            path="srcs/poky"/>
   <project remote="flashbots"       revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
-  <project remote="flashbots"       revision="scarthgap"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
-  <project remote="flashbots"       revision="scarthgap"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
+  <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
+  <project remote="flashbots"       revision="e7dceb1c92caf7f21ef1d7b49c85328c30cffd90"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
 
   <project remote="flashbots"       revision="b0fa8f5c46a359e7a9eadd3cf401fa6db5e16bfe"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
   <project remote="flashbots"       revision="64b83c252c55ed56ed50a8c5d084334c9b5ac69b"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
