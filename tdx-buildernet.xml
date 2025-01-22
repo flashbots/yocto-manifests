@@ -5,7 +5,7 @@
   <default sync-j="4"/>
 
   <project remote="flashbots"       revision="refs/tags/v1.2.0"     name="yocto-manifests"                 path="srcs/yocto-manifests">
-    <copyfile dest="setup"          src="config_files/tdx-rbuilder/setup"/>
+    <copyfile dest="setup"          src="config_files/tdx-buildernet/setup"/>
     <copyfile dest="Makefile"       src="config_files/Makefile"/>
   </project>
 
