@@ -7,6 +7,8 @@ ADD build.sh /usr/bin/build
 RUN chmod +x /usr/bin/build
 
 ARG MANIFEST
+ARG REVISION=main
 ENV MANIFEST_FILE=${MANIFEST}
+ENV REVISION=${REVISION}
 
 CMD /usr/bin/build
