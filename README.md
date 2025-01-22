@@ -38,20 +38,20 @@ setup a Yocto Project build environment for you!
 This repository contains several manifest files:
 * **tdx-base.xml** - Minimal confidential computing image configuration (uses [tdx-base_yocto_build_config.env](env_files/tdx-base_yocto_build_config.env))
 * **tdx-bob.xml** - Searcher node image configuration (uses [bob_yocto_build_config.env](env_files/bob_yocto_build_config.env))
-* **tdx-rbuilder.xml** - Builder/validator node image configuration (uses [rbuilder_yocto_build_config.env](env_files/rbuilder_yocto_build_config.env))
+* **tdx-buildernet.xml** - BuilderNet node image configuration (uses [buildernet_yocto_build_config.env](env_files/buildernet_yocto_build_config.env))
 
 ## Build Profiles
 
 This repository supports multiple build profiles, each tailored for specific use cases and defined by its corresponding manifest file:
 
-* **tdx-base**: Minimal confidential computing image. 
+* **tdx-base**: Minimal confidential computing image.
   See [tdx-base/README.md](config_files/tdx-base/README.md) for details.
 
-* **tdx-bob**: Specialized image for running searcher nodes with podman support and searcher-specific configurations. 
+* **tdx-bob**: Specialized image for running searcher nodes with podman support and searcher-specific configurations.
   See [tdx-bob/README.md](config_files/tdx-bob/README.md) for details.
 
-* **tdx-rbuilder**: Comprehensive environment for running Ethereum validators and builders, including reth and lighthouse clients. 
-  See [tdx-rbuilder/README.md](config_files/tdx-rbuilder/README.md) for details.
+* **tdx-buildernet**: Comprehensive environment to run as part of [BuilderNet](https://buildernet.org/). Includes Lighthouse, Reth, and rbuilder.
+  See [tdx-buildernet/README.md](config_files/tdx-buildernet/README.md) for details.
 
 Each profile's configuration and setup scripts are maintained in the `config_files/` directory. See the profile-specific READMEs for detailed information about features, requirements, and build configurations.
 
@@ -59,10 +59,10 @@ Each profile's configuration and setup scripts are maintained in the `config_fil
 
 **Make sure you are checked out on the correct commit (in this repo).**
 
-Building images and generating their reproducible build measurements is as simple as installing docker and running `make measurements-<name>`. For list of images run `make help`.  
-Make sure you have plenty of disk space available (200 GBs), and that your session will not time out as a fresh build can take over an hour on slow hardware.  
+Building images and generating their reproducible build measurements is as simple as installing docker and running `make measurements-<name>`. For list of images run `make help`.
+Make sure you have plenty of disk space available (200 GBs), and that your session will not time out as a fresh build can take over an hour on slow hardware.
 
-Built images as well as measurements will be available in `./reproducible-build/artifacts-<image name>`.  
+Built images as well as measurements will be available in `./reproducible-build/artifacts-<image name>`.
 
 ## Preparing your host for non-docker builds
 
@@ -83,7 +83,7 @@ If on Debian/Ubuntu, then run:
 sudo apt-get install repo
 ```
 
-Otherwise, follow theese steps:    
+Otherwise, follow these steps:
 *  Download the Repo script.
 ```
 $ curl https://storage.googleapis.com/git-repo-downloads/repo > repo
@@ -115,7 +115,7 @@ $ cd yocto/tdx
 * Clone the Yocto meta layer source using yocto manifest as show below.
 ```
 $ repo init -u https://github.com/flashbots/yocto-manifests.git -b main -m <manifest_file>.xml
-# Replace <manifest_file> with tdx-base.xml, tdx-bob.xml, or tdx-rbuilder.xml depending on your needs
+# Replace <manifest_file> with tdx-base.xml, tdx-bob.xml, or tdx-buildernet.xml depending on your needs
 ```
 A successful initialization will end with a message stating that Repo is
 initialized in your working directory. Your directory should now contain a
@@ -145,7 +145,7 @@ $ source setup
 
 7. Build the image by using the provided `Makefile`.
 
-Your host is now ready to build images.  
+Your host is now ready to build images.
 
 > **Note:** Make sure you are exporting the env vars you want to enable/disable yocto build time configuration. \
 > Please inspect the [env_files](./env_files/) and export the desired ones as env variables before trigger the build. \
@@ -180,12 +180,12 @@ There is also [poky-container](https://github.com/crops/poky-container/) as an a
 1. Clone this repo
 ```
 $ git clone https://github.com/flashbots/yocto-manifests.git
-``` 
-2. adjust the yocto build configuration in [env_files](https://github.com/flashbots/yocto-manifests/tree/main/env_files) for the target image you want to build 
-3. make the desired image using, these are the current options: 
+```
+2. adjust the yocto build configuration in [env_files](https://github.com/flashbots/yocto-manifests/tree/main/env_files) for the target image you want to build
+3. make the desired image using, these are the current options:
    - image-base: builds a basic tdx-image and outputs the image artifacts in */reproducible-build/artifacts-base* (see [tdx-base profile](config_files/tdx-base/README.md))
    - image-bob: builds the image for the BOB project with the searcher embedded ss-key and podman support and outputs the image artifacts in */reproducible-build/artifacts-bob* (see [tdx-bob profile](config_files/tdx-bob/README.md))
-   - image-rbuilder: builds the image for with rbuilder/reth/lighthouse and outputs the image artifacts in */reproducible-build/artifacts-rbuilder* (see [tdx-rbuilder profile](config_files/tdx-rbuilder/README.md))
+   - image-buildernet: builds the image for with rbuilder/reth/lighthouse and outputs the image artifacts to */reproducible-build/artifacts-buildernet* (see [tdx-buildernet profile](config_files/tdx-buildernet/README.md))
 ```
 $ make image-<target-name>
 ```
