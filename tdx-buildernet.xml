@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="flashbots"  fetch="https://github.com/flashbots"/>
+
+  <default sync-j="4"/>
+
+  <project remote="flashbots"       revision="refs/tags/v1.2.0"     name="yocto-manifests"                 path="srcs/yocto-manifests">
+    <copyfile dest="setup"          src="config_files/tdx-buildernet/setup"/>
+    <copyfile dest="Makefile"       src="config_files/Makefile"/>
+  </project>
+
+  <project remote="flashbots"       revision="c5627ab06fc07221237b9a7059ac378ea80578f8"        name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
+  <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
+  <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
+  <project remote="flashbots"       revision="e7dceb1c92caf7f21ef1d7b49c85328c30cffd90"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
+  <project remote="flashbots"       revision="b0fa8f5c46a359e7a9eadd3cf401fa6db5e16bfe"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
+  <project remote="flashbots"       revision="7c9e141a70d0392070705748ebc85cc94b83cd2e"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="061d78b05f2afb995d2d8f0cf7f403b14f89c92a"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
+  <project remote="flashbots"       revision="ec8129a2c1e20a0bff5185f56c78a8d54af9182a"        name="meta-observability"              path="srcs/poky/meta-observability"/>
+  <project remote="flashbots"       revision="bc9c4735461f591cbcd4bff8f12b67e98cd32d06"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
+</manifest>
+

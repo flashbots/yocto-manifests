@@ -63,7 +63,7 @@ verbose_output "Returned to $(pwd)"
 
 
 # Apply patches
-for patch in $CURRENT_PATH/srcs/yocto-manifests/config_files/tdx-rbuilder/patches/patch-*; do
+for patch in $CURRENT_PATH/srcs/yocto-manifests/config_files/tdx-buildernet/patches/patch-*; do
     # Extract the filename from the patch file and remove the "patch-" prefix
     filename=$(basename $patch | sed 's/^patch-//')
     verbose_output "Processing patch file $patch"

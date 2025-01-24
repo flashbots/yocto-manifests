@@ -1,6 +1,6 @@
-# TDX RBuilder Profile
+# TDX BuilderNet Profile
 
-This profile creates an image optimized for running Ethereum validators and builders, including reth and lighthouse clients. It provides a comprehensive environment for blockchain node operation.
+This profile creates an image to run as part of [BuilderNet](https://buildernet.org/). Includes Lighthouse, Reth, and rbuilder.
 
 ## Features
 - AMD SEV-SNP/TDX support
@@ -29,25 +29,25 @@ This profile creates an image optimized for running Ethereum validators and buil
 - Distribution: cvm
 
 ## Environment Variables
-The following environment variables can be set in env_files/rbuilder_yocto_build_config.env:
+The following environment variables can be set in env_files/buildernet_yocto_build_config.env:
 - `DEBUG_TWEAKS_ENABLED`: Enable debug features (default: 1)
 - `INCLUDE_RCLONE`: Include rclone tool (default: 1)
 - `INIT_CONFIG_URL`: Builder initialization config URL
 - `DISK_ENCRYPTION_KEY_STORAGE`: Configure disk encryption key storage location (optional)
 - `SSH_PUBKEY`: SSH public key for access (optional)
-- `TARGET_LUN`: The logical unit number of the attached disk (optiona, default: 10)
+- `TARGET_LUN`: The logical unit number of the attached disk (optional, default: 10)
 
 ## Usage
 ```bash
-make image-rbuilder
+make image-buildernet
 ```
 
 For measurement generation:
 ```bash
-make measurements-rbuilder
+make measurements-buildernet
 ```
 
-Build artifacts will be available in `reproducible-build/artifacts-rbuilder/`.
+Build artifacts will be available in `reproducible-build/artifacts-buildernet/`.
 
 ## Notes
 - Includes full development toolchain
