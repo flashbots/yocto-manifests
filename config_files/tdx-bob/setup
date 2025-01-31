@@ -49,6 +49,12 @@ verbose_output "Added the meta-custom-podman layer to bblayers.conf"
 bitbake-layers add-layer ../meta-searcher
 verbose_output "Added the meta-searcher layer to bblayers.conf"
 
+bitbake-layers add-layer ../meta-rust-bin
+verbose_output "Added the meta-rust-bin layer to bblayers.conf"
+
+bitbake-layers add-layer ../meta-clang
+verbose_output "Added the meta-clang layer to bblayers.conf"
+
 # Return to the original directory
 popd
 verbose_output "Returned to $(pwd)"
