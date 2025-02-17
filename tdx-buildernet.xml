@@ -18,6 +18,6 @@
   <project remote="flashbots"       revision="2931ce3e2a75a5778d03a11b14bbdf50f9211616"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
   <project remote="flashbots"       revision="061d78b05f2afb995d2d8f0cf7f403b14f89c92a"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
   <project remote="flashbots"       revision="ec8129a2c1e20a0bff5185f56c78a8d54af9182a"        name="meta-observability"              path="srcs/poky/meta-observability"/>
-  <project remote="flashbots"       revision="bc9c4735461f591cbcd4bff8f12b67e98cd32d06"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
+  <project remote="flashbots"       revision="33f47e20e4f8e18fe28e3ddf854bce65f714ced0"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
 </manifest>
 
