@@ -9,7 +9,7 @@
     <copyfile dest="Makefile"       src="config_files/Makefile"/>
   </project>
 
-  <project remote="flashbots"       revision="c5627ab06fc07221237b9a7059ac378ea80578f8"        name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="d1828b760bff85be16a7e97bc7b36a5c8c910c5a"        name="poky"                            path="srcs/poky"/>
   <project remote="flashbots"       revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
