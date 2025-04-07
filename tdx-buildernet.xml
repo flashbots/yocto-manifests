@@ -13,7 +13,7 @@
   <project remote="flashbots"       revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
-  <project remote="flashbots"       revision="e7dceb1c92caf7f21ef1d7b49c85328c30cffd90"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
+  <project remote="flashbots"       revision="7d376c4a0cb45d34f45a26a843b57b3c21cf59fc"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
   <project remote="flashbots"       revision="5cf5496822c1ad3b1527f805463e2d26fb866b83"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
   <project remote="flashbots"       revision="fe4b5c8723ca54573b489d7072b8b4a48d4b1f80"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
   <project remote="flashbots"       revision="53974894fe1bf0fba26d0f6d5ded32b3c3f4a43e"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
