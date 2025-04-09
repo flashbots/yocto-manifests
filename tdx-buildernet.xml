@@ -9,14 +9,14 @@
     <copyfile dest="Makefile"       src="config_files/Makefile"/>
   </project>
 
-  <project remote="flashbots"       revision="acbb15337174736126226dcfbfd742cab538ab82"        name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="52be30fb21dd1e29c265774c0def532d9e38d836"        name="poky"                            path="srcs/poky"/>
   <project remote="flashbots"       revision="67ad83dd7c2485dae0c90eac345007af6195b84d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
   <project remote="flashbots"       revision="b9ef02282197380ef05edbd0eb852e1934ceb59b"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
-  <project remote="flashbots"       revision="5cf5496822c1ad3b1527f805463e2d26fb866b83"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
-  <project remote="flashbots"       revision="a68e888821f7a93b4694ea22be494bef3314272f"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
-  <project remote="flashbots"       revision="53974894fe1bf0fba26d0f6d5ded32b3c3f4a43e"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
+  <project remote="flashbots"       revision="b2886bb7358ff901aeb2ed4145ef21521576dce2"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
+  <project remote="flashbots"       revision="c893738f29bb4f5631226fcc2bf9b3ab60af669c"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="7942f38efeee429ffc26c60bcd33d1435bda1c1e"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
   <project remote="flashbots"       revision="b24416651e962ad6fdc027ea899ddbb64d3fa672"        name="meta-observability"              path="srcs/poky/meta-observability"/>
   <project remote="flashbots"       revision="33f47e20e4f8e18fe28e3ddf854bce65f714ced0"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
 </manifest>
