@@ -4,20 +4,20 @@
 
   <default sync-j="4"/>
 
-  <project remote="flashbots"       revision="refs/tags/v1.2.1"     name="yocto-manifests"                 path="srcs/yocto-manifests">
+  <project remote="flashbots"       revision="refs/tags/v1.3-rc2"     name="yocto-manifests"                 path="srcs/yocto-manifests">
     <copyfile dest="setup"          src="config_files/tdx-buildernet/setup"/>
     <copyfile dest="Makefile"       src="config_files/Makefile"/>
   </project>
 
-  <project remote="flashbots"       revision="c5627ab06fc07221237b9a7059ac378ea80578f8"        name="poky"                            path="srcs/poky"/>
-  <project remote="flashbots"       revision="4a7bb77f7ebe0ac8be5bab5103d8bd993e17e18d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
+  <project remote="flashbots"       revision="38864fd0d720432d5c8034ac26a1450078206cd9"        name="poky"                            path="srcs/poky"/>
+  <project remote="flashbots"       revision="67ad83dd7c2485dae0c90eac345007af6195b84d"        name="meta-openembedded"               path="srcs/poky/meta-openembedded"/>
   <project remote="flashbots"       revision="adbc1d929c4470c260464215b80f3968ea6d4564"        name="meta-secure-core"                path="srcs/poky/meta-secure-core"/>
   <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
-  <project remote="flashbots"       revision="e7dceb1c92caf7f21ef1d7b49c85328c30cffd90"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
-  <project remote="flashbots"       revision="b0fa8f5c46a359e7a9eadd3cf401fa6db5e16bfe"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
-  <project remote="flashbots"       revision="2931ce3e2a75a5778d03a11b14bbdf50f9211616"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
-  <project remote="flashbots"       revision="061d78b05f2afb995d2d8f0cf7f403b14f89c92a"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
-  <project remote="flashbots"       revision="ec8129a2c1e20a0bff5185f56c78a8d54af9182a"        name="meta-observability"              path="srcs/poky/meta-observability"/>
+  <project remote="flashbots"       revision="b9ef02282197380ef05edbd0eb852e1934ceb59b"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
+  <project remote="flashbots"       revision="d8bcb394310f896f98f8b83b29732678792d101e"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
+  <project remote="flashbots"       revision="4cee6f005fd6d554cc282c47c68f3bde011c1393"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="7942f38efeee429ffc26c60bcd33d1435bda1c1e"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
+  <project remote="flashbots"       revision="42eb6c1894e260219386f507dbe04abe4bbd16e7"        name="meta-observability"              path="srcs/poky/meta-observability"/>
   <project remote="flashbots"       revision="33f47e20e4f8e18fe28e3ddf854bce65f714ced0"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
 </manifest>
 
