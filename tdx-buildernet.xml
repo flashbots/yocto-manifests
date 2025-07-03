@@ -15,7 +15,7 @@
   <project remote="flashbots"       revision="54b806b1985f3989722ee308e1073530fe3328c1"        name="meta-virtualization"             path="srcs/poky/meta-virtualization"/>
   <project remote="flashbots"       revision="b9ef02282197380ef05edbd0eb852e1934ceb59b"        name="meta-clang"                      path="srcs/poky/meta-clang"/>
   <project remote="flashbots"       revision="d8bcb394310f896f98f8b83b29732678792d101e"        name="meta-confidential-compute"       path="srcs/poky/meta-confidential-compute"/>
-  <project remote="flashbots"       revision="85810d10a25810cff887c5f546ebfebc2e3e6001"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
+  <project remote="flashbots"       revision="049b4b9f2c3c558eea56334cdba048e40180662c"        name="meta-evm"                        path="srcs/poky/meta-evm"/>
   <project remote="flashbots"       revision="7942f38efeee429ffc26c60bcd33d1435bda1c1e"        name="meta-rust-bin"                   path="srcs/poky/meta-rust-bin"/>
   <project remote="flashbots"       revision="c98401f2cbd5bf3e688ca1bca58e7ca56dd35cc5"        name="meta-observability"              path="srcs/poky/meta-observability"/>
   <project remote="flashbots"       revision="33f47e20e4f8e18fe28e3ddf854bce65f714ced0"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
