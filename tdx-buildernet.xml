@@ -4,7 +4,7 @@
 
   <default sync-j="4"/>
 
-  <project remote="flashbots"       revision="refs/heads/release/v1.5.1"     name="yocto-manifests"                 path="srcs/yocto-manifests">
+  <project remote="flashbots"       revision="refs/tags/v1.5.1-rc2"     name="yocto-manifests"                 path="srcs/yocto-manifests">
     <copyfile dest="setup"          src="config_files/tdx-buildernet/setup"/>
     <copyfile dest="Makefile"       src="config_files/Makefile"/>
   </project>
@@ -20,4 +20,3 @@
   <project remote="flashbots"       revision="2a272fff6a7d8f91baa65b8ab1665dca3e1834bc"        name="meta-observability"              path="srcs/poky/meta-observability"/>
   <project remote="flashbots"       revision="33f47e20e4f8e18fe28e3ddf854bce65f714ced0"        name="meta-custom-podman"              path="srcs/poky/meta-custom-podman"/>
 </manifest>
-
